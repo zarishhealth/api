@@ -1,0 +1,11 @@
+# Code generation for the contracts in `proto/`.
+#
+# Generated code is never committed: `zarish-proto` (in `core`) runs prost at build
+# time, and the other targets are produced on demand. Run `buf generate` from this
+# directory.
+version: v2
+inputs:
+  - directory: proto
+plugins:
+  - remote: buf.build/protocolbuffers/rust
+    out: gen/rust

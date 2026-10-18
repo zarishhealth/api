@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zarishhealth.github.io/api/json-schema/registration-rules.schema.json",
+  "title": "Registration rules",
+  "description": "Which fields a registration requires, by origin and registration category. The shape is fixed here; the values come from the registration specification.",
+  "type": "object",
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "origins": {
+      "type": "object",
+      "description": "Keyed by origin: host-community, refugee-camp, host-hospital, outreach, referral or a site-defined origin.",
+      "additionalProperties": { "$ref": "#/$defs/origin" }
+    }
+  },
+  "required": ["version", "origins"],
+  "additionalProperties": false,
+  "$defs": {
+    "origin": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "object",
+          "description": "Keyed by registration category; the value lists the field names the category requires.",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          }
+        }
+      },
+      "required": ["categories"],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,51 @@
+# The ZarishHealth JSON API.
+#
+# Contract only: the implementation is `zarish-server` in the `core` repository.
+# Endpoints arrive with the A-* tasks; nothing here may break within `v1`.
+
+openapi: 3.1.0
+
+info:
+  title: ZarishHealth API
+  version: 1.0.0
+  summary: Health services for camp and community sites.
+  description: |
+    The JSON API serving the ZarishHealth web and desktop clients.
+
+    Conventions:
+
+    - Resource identifiers are UUIDv7, generated on the client so an offline site can
+      create records.
+    - Errors are RFC 9457 `application/problem+json`; the `type` URIs are listed in
+      `problems/`.
+    - Every response carries the request identifier so a caller can quote it.
+    - No personal or patient data appears in a URL, a log line or an error message.
+
+    The clinical data itself is served by the FHIR facade at `/fhir`, not here.
+  contact:
+    name: ZarishHealth maintainers
+    url: https://zarishhealth.github.io/
+  license:
+    name: Apache-2.0
+    identifier: Apache-2.0
+
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+
+servers:
+  - url: "{apiOrigin}"
+    description: The runtime host. It is replaceable and is never an identifier.
+    variables:
+      apiOrigin:
+        default: http://localhost:8080
+
+tags:
+  - name: sites
+  - name: devices
+  - name: sync
+  - name: users
+  - name: audit
+  - name: reports
+  - name: configuration
+  - name: hl7
+
+paths: {}

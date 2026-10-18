@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zarishhealth.github.io/api/json-schema/site-config.schema.json",
+  "title": "Site configuration",
+  "description": "The non-secret part of one site's configuration. Secrets, device keys and password material are installed on the site and never appear here.",
+  "type": "object",
+  "properties": {
+    "siteId": {
+      "type": "string",
+      "description": "UUIDv7 of the site."
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "profile": {
+      "type": "string",
+      "enum": ["national-his", "primary-care", "hospital", "refugee-camp", "community", "minimal", "demo"],
+      "description": "One of the profile files in the distro-template repository."
+    },
+    "locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$",
+      "description": "BCP 47 default language for this site."
+    },
+    "apiOrigin": {
+      "type": ["string", "null"],
+      "description": "Runtime host of the central tier, when the site has one. Never used as an identifier."
+    }
+  },
+  "required": ["siteId", "name", "profile", "locale"],
+  "additionalProperties": false
+}

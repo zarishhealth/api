@@ -1,0 +1,55 @@
+// The sync protocol between a ZarishHealth site and its peers.
+//
+// A site works offline and exchanges change-log entries with a peer when a link is
+// available. Clinical edits that overlap are never resolved by a timestamp: they go
+// to the review queue. The package is permanent within the `v1` major version.
+
+syntax = "proto3";
+
+package zarishhealth.sync.v1;
+
+// Exchanges change-log entries with a peer.
+service SyncService {
+  // Sends local change-log entries and receives the peer's.
+  rpc Exchange(ExchangeRequest) returns (ExchangeResponse);
+}
+
+// A set of change-log entries offered to a peer.
+message ExchangeRequest {
+  // UUIDv7 of the site making the request.
+  string site_id = 1;
+  // Entries the peer does not have yet.
+  repeated ChangeLogEntry entries = 2;
+}
+
+// The peer's answer.
+message ExchangeResponse {
+  // UUIDv7 of the site that answered.
+  string site_id = 1;
+  // Entries this side does not have yet.
+  repeated ChangeLogEntry entries = 2;
+  // Resources whose versions conflict and need review.
+  repeated Conflict conflicts = 3;
+}
+
+// One entry in a site's change log.
+message ChangeLogEntry {
+  // UUIDv7 of the entry.
+  string id = 1;
+  // Resource type, for example `Patient`.
+  string resource_type = 2;
+  // UUIDv7 of the resource.
+  string resource_id = 3;
+  // Version of the resource this entry produced.
+  string resource_version = 4;
+  // RFC 3339 UTC timestamp of the change.
+  string recorded_at = 5;
+}
+
+// A resource that changed on both sides.
+message Conflict {
+  // UUIDv7 of the resource.
+  string resource_id = 1;
+  // Resource type, for example `Patient`.
+  string resource_type = 2;
+}

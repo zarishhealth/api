@@ -1,0 +1,6 @@
+# `buf generate` output is never committed.
+/gen/
+*.log
+.env
+.env.*
+.DS_Store

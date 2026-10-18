@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zarishhealth.github.io/api/json-schema/geography-record.schema.json",
+  "title": "Geography record",
+  "description": "One administrative unit, camp, block or sub-block, as stored in the content repository. Every value in this repository is synthetic until the dataset licence is confirmed.",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string",
+      "description": "Code published by the source authority, or a synthetic code here."
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "level": {
+      "type": "string",
+      "enum": ["country", "division", "district", "upazila", "union", "camp", "block", "sub-block"]
+    },
+    "parentCode": {
+      "type": ["string", "null"],
+      "description": "Code of the containing unit; null only for the country."
+    },
+    "latitude": { "type": "number", "minimum": -90, "maximum": 90 },
+    "longitude": { "type": "number", "minimum": -180, "maximum": 180 }
+  },
+  "required": ["code", "name", "level", "parentCode"],
+  "additionalProperties": false
+}

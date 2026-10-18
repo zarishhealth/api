@@ -1,0 +1,10 @@
+# Protobuf lint and breaking-change checks (BLUEPRINT section 16).
+version: v2
+modules:
+  - path: proto
+lint:
+  use:
+    - STANDARD
+breaking:
+  use:
+    - FILE

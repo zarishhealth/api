@@ -1,0 +1,3 @@
+# Spectral ruleset for the OpenAPI documents. Pinned so a lint run is reproducible.
+extends:
+  - spectral:oas
